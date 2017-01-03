@@ -182,7 +182,7 @@
                         <div ng-show="listaDocumentos[13].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Factura: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[13].valor" class="form-control" ng-blur="Guardar(listaDocumentos[13].idDocumento, listaDocumentos[13].valor)" ng-disabled="true"/>
+                                <input type="text" id="txtPermisoEsp" ng-model="unidadHeader.factura" class="form-control" ng-blur="Guardar(listaDocumentos[13].idDocumento, listaDocumentos[13].valor)" ng-disabled="true"/>
                                 <div class="alignArrow">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[13].accion}}" data-content="{{listaDocumentos[13].nombreUsuario}} el {{listaDocumentos[13].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[13].accion == null"></span></div>
