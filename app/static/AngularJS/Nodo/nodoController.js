@@ -604,7 +604,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
 
     //**************************************************************************
     //****************Para obtener la CARTA FACTURA***************************//
-    $scope.cartaFactura = function() {
+    $scope.cartaFactura = function(unidad) {
             var iframe = '<div class="modal-body"><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
             $.createModal({
                 title: 'CARTA FACTURA',
@@ -612,7 +612,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
                 closeButton: false,
                 scrollable: false
             });
-            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin).then(function(result) {
+            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin,unidad).then(function(result) {
                 console.log(result)
 
                 var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))

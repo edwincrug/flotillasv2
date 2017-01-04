@@ -90,7 +90,7 @@
             <hr />
         </section>
         <section align="right" ng-show="listaDocumentos[44].permiso == 1">
-            <button type="button" class="btn btn-success btnBuscar" ng-click="cartaFactura()" ng-show="currentNode.idFase==2 && unidadHeader.idLicitacion==9">Carta Factura</button>
+            <button type="button" class="btn btn-success btnBuscar" ng-click="cartaFactura(unidadHeader)" ng-show="currentNode.idFase==2 && unidadHeader.idLicitacion==9">Carta Factura</button>
             <button type="button" class="btn btn-info btnBuscar" ng-click="cierraLicitacionVIN()" id="btnCerrarUnidad" data-loading-text="Cerrando..." ng-disabled="desabilitaBtnCerrar()">Cerrar Unidad</button>
         </section>
         <section id="detail">

@@ -10,8 +10,8 @@ registrationModule.factory('documentoRepository', function ($http) {
                 params: { id: '1|' + vin + '|' + idDocumento + '|' + ruta + name + '|' + consecutivo}
             });
         },
-        getCartaFactura: function(vin) {
-            return $http.get(documentoUrl + '1|' + vin);
+        getCartaFactura: function(vin,unidad) {
+            return $http.get(documentoUrl + '1|' + vin + '|' + unidad.idEmpresa + '|'+ unidad.idSucursal);
         }
     };
 });
