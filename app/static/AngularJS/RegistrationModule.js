@@ -11,6 +11,11 @@ var registrationModule = angular.module("registrationModule", ["ngRoute", "ngGri
         controller: 'nodoController'
     });
 
+    $routeProvider.when('/unidad:vin&:usuario', {
+        templateUrl: '/AngularJS/Templates/Nodo.html',
+        controller: 'nodoController'
+    });
+
     $routeProvider.when('/busqueda', {
         templateUrl: '/AngularJS/Templates/Busqueda.html',
         controller: 'busquedaController'

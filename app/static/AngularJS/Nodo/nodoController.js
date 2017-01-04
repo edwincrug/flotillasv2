@@ -1,4 +1,4 @@
-registrationModule.controller("nodoController", function($scope, $rootScope, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils) {
+registrationModule.controller("nodoController", function($scope, $rootScope, $routeParams, $window, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils, loginRepository) {
 
     //Propiedades
     $scope.idProceso = 1;
@@ -23,7 +23,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
     $scope.nombreArchivo = '';
     $scope.consecutivoEliminar = '';
     $scope.fechaModificada = 0;
-
+    $scope.datoVinUrl = '';
     //Mensajes en caso de error
     var errorCallBack = function(data, status, headers, config) {
         $('#btnEnviar').button('reset');
@@ -32,21 +32,47 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
 
     //Grupo de funciones de inicio
     $scope.init = function() {
-        //Obtengo los datos del empleado logueado
+            //Obtengo los datos del empleado logueado
         $scope.empleado = localStorageService.get('employeeLogged');
-        //Obtengo el idUsuario
-        $scope.idUsuario = $scope.empleado.idUsuario;
-        $scope.idRol = $scope.empleado.idRol;
-        localStorageService.set('idUsuario', $scope.idUsuario);
-        localStorageService.set('idRol', $scope.idRol);
-        //Obtengo los datos del VIN
-        $scope.unidad = localStorageService.get('currentVIN');
+        if ($scope.empleado == null || $scope.empleado == undefined) {
+            loginRepository.loginUrl($routeParams.usuario).then(function(result) {
+                $scope.empleado = result.data
+                localStorageService.set('employeeLogged', $scope.empleado);
+                //Obtengo el idUsuario
+                $scope.idUsuario = $scope.empleado.idUsuario;
+                $scope.idRol = $scope.empleado.idRol;
+                localStorageService.set('idUsuario', $scope.idUsuario);
+                localStorageService.set('idRol', $scope.idRol);
+                busquedaRepository.getFlotilla('', $routeParams.vin).then(function(result) {
+                    $scope.datoVinUrl = result.data[0];
+                    localStorageService.set('currentVIN', $scope.datoVinUrl);
+                    $scope.unidad = localStorageService.get('currentVIN');
+                    unidadRepository.getHeader(localStorageService.get('currentVIN').vin)
+                        .success(obtieneHeaderSuccessCallback)
+                        .error(errorCallBack);
+                    getListaDocumentos(); 
+                    $window.location.reload();                   
+                });
+                //localStorageService.set('currentVIN', $routeParams.vin);
+                //$scope.unidad = localStorageService.get('currentVIN');
 
-        unidadRepository.getHeader(localStorageService.get('currentVIN').vin)
-            .success(obtieneHeaderSuccessCallback)
-            .error(errorCallBack);
 
-        getListaDocumentos();
+            });
+        } else {
+            //Obtengo el idUsuario
+            $scope.idUsuario = $scope.empleado.idUsuario;
+            $scope.idRol = $scope.empleado.idRol;
+            localStorageService.set('idUsuario', $scope.idUsuario);
+            localStorageService.set('idRol', $scope.idRol);
+            //Obtengo los datos del VIN
+            $scope.unidad = localStorageService.get('currentVIN');
+
+            unidadRepository.getHeader(localStorageService.get('currentVIN').vin)
+                .success(obtieneHeaderSuccessCallback)
+                .error(errorCallBack);
+
+            getListaDocumentos();
+        }
 
         $('#placaDoc').hide();
         $('[data-toggle="popover"]').popover()
@@ -213,7 +239,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
     //Succes obtiene lista de documetos por fase y por perfil
     var getUnidadSuccessCallback = function(data, status, headers, config) {
         $scope.unidad = data;
-        alertFactory.success('Datos de la unidad cargados.');
+        alertFactory.success('Datos de la unidad cargados.');        
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -612,7 +638,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, loc
                 closeButton: false,
                 scrollable: false
             });
-            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin,unidad).then(function(result) {
+            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad).then(function(result) {
                 console.log(result)
 
                 var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
