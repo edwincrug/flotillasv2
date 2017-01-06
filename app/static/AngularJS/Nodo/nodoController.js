@@ -24,6 +24,9 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     $scope.consecutivoEliminar = '';
     $scope.fechaModificada = 0;
     $scope.datoVinUrl = '';
+    $scope.gerente = '';
+    $scope.gerenteSel = false;
+    $scope.mostrarGerente = true;
     //Mensajes en caso de error
     var errorCallBack = function(data, status, headers, config) {
         $('#btnEnviar').button('reset');
@@ -32,7 +35,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
 
     //Grupo de funciones de inicio
     $scope.init = function() {
-            //Obtengo los datos del empleado logueado
+        //Obtengo los datos del empleado logueado
         $scope.empleado = localStorageService.get('employeeLogged');
         if ($scope.empleado == null || $scope.empleado == undefined) {
             loginRepository.loginUrl($routeParams.usuario).then(function(result) {
@@ -50,8 +53,8 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
                     unidadRepository.getHeader(localStorageService.get('currentVIN').vin)
                         .success(obtieneHeaderSuccessCallback)
                         .error(errorCallBack);
-                    getListaDocumentos(); 
-                    $window.location.reload();                   
+                    getListaDocumentos();
+                    $window.location.reload();
                 });
                 //localStorageService.set('currentVIN', $routeParams.vin);
                 //$scope.unidad = localStorageService.get('currentVIN');
@@ -239,7 +242,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     //Succes obtiene lista de documetos por fase y por perfil
     var getUnidadSuccessCallback = function(data, status, headers, config) {
         $scope.unidad = data;
-        alertFactory.success('Datos de la unidad cargados.');        
+        alertFactory.success('Datos de la unidad cargados.');
     };
 
     ////////////////////////////////////////////////////////////////////////////
@@ -631,21 +634,56 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     //**************************************************************************
     //****************Para obtener la CARTA FACTURA***************************//
     $scope.cartaFactura = function(unidad) {
-            var iframe = '<div class="modal-body"><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
-            $.createModal({
-                title: 'CARTA FACTURA',
-                message: iframe,
-                closeButton: false,
-                scrollable: false
+        busquedaRepository.getGerente(0).then(function(result) {
+            $scope.gerente = result.data;
+            $('#cartaFactura').modal('show');
+            // var iframe = '<div class="modal-body"><div ng-repeat="gerentes in gerente"><div class="row"><div class="col-md-2"><input type="checkbox"></div><div class="col-md-10">{{gerentes.nombre}}</div></div></div><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
+            // $.createModal({
+            //     title: 'CARTA FACTURA',
+            //     message: iframe,
+            //     closeButton: false,
+            //     scrollable: false
+            // });
+        });
+        //var iframe = '<div class="modal-body"><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
+        // $.createModal({
+        //     title: 'CARTA FACTURA',
+        //     message: iframe,
+        //     closeButton: false,
+        //     scrollable: false
+        // });
+        // documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad).then(function(result) {
+        //     console.log(result)
+
+        //     var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
+        //     console.log(pdf)
+        //     $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#pdfInvoceContent');
+
+        // })
+    }
+    $scope.gerenteSeleccionado = function(info) {
+        $scope.gerenteSel = true;
+    }
+    $scope.gerenteAct = function() {
+        $scope.gerenteSel = false;
+    }
+    $scope.generarCF = function(infogerente, unidad) {
+            $scope.mostrarGerente = false;
+            console.log(infogerente);
+            angular.forEach(infogerente, function(value, key) {
+                if (value.seleccionado == true) {
+                    console.log(value,'El elegido');
+                    documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad,value).then(function(result) {
+                        console.log(result)
+
+                        var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
+                        console.log(pdf)
+                        $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#CartaFacturaPdf');
+
+                    })
+
+                }
             });
-            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad).then(function(result) {
-                console.log(result)
-
-                var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
-                console.log(pdf)
-                $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#pdfInvoceContent');
-
-            })
         }
         //**************************************************************************
 });

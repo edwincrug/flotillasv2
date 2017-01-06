@@ -182,7 +182,7 @@
                         <div ng-show="listaDocumentos[13].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Factura: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPermisoEsp" ng-model="unidadHeader.factura" class="form-control" ng-blur="Guardar(listaDocumentos[13].idDocumento, listaDocumentos[13].valor)" ng-disabled="true"/>
+                                <input type="text" id="txtPermisoEsp" ng-model="unidadHeader.factura" class="form-control" ng-blur="Guardar(listaDocumentos[13].idDocumento, listaDocumentos[13].valor)" ng-disabled="true" />
                                 <div class="alignArrow">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[13].accion}}" data-content="{{listaDocumentos[13].nombreUsuario}} el {{listaDocumentos[13].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[13].accion == null"></span></div>
@@ -764,6 +764,36 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+        <!--Modal Documentos-->
+        <div class="modal fade" tabindex="-1" id="cartaFactura">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">CARTA FACTURA</h4>
+                    </div>
+                    <div class="modal-body" >
+                        <div ng-repeat="gerentes in gerente" ng-show="mostrarGerente">
+                            <div class="row">
+                                <div class="col-md-2" style="text-align: center;">
+                                    <input type="checkbox" ng-model="gerentes.seleccionado" ng-change="gerenteSeleccionado()" ng-disabled="gerenteSel">
+                                </div>
+                                <div class="col-md-10">
+                                    {{gerentes.nombre}}
+                                </div>
+                            </div>
+                        </div>
+                        <div id="CartaFacturaPdf" ng-hide="mostrarGerente"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="gerenteAct()">Cerrar</button>
+                        <button type="button" class="btn btn-primary" ng-click="generarCF(gerente,unidadHeader)" ng-disabled="!gerenteSel" ng-show="mostrarGerente">Generar Carta Factura</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
