@@ -183,7 +183,7 @@
                             <label for="permisoEsp" class="control-label col-md-2">Factura: </label>
                             <div class="col-md-2">
                                 <input type="text" id="txtPermisoEsp" ng-model="unidadHeader.factura" class="form-control" ng-blur="Guardar(listaDocumentos[13].idDocumento, listaDocumentos[13].valor)" ng-disabled="true" />
-                                <div class="alignArrow">
+                                <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[13].accion}}" data-content="{{listaDocumentos[13].nombreUsuario}} el {{listaDocumentos[13].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[13].accion == null"></span></div>
                                 </div>
@@ -206,7 +206,7 @@
                             <label for="permisoEsp" class="control-label col-md-2">Actas de Entrega: </label>
                             <div class="col-md-2">
                                 <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[45].valor" class="form-control" ng-blur="Guardar(listaDocumentos[45].idDocumento, listaDocumentos[45].valor)" />
-                                <div class="alignArrow">
+                                <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[45].accion}}" data-content="{{listaDocumentos[45].nombreUsuario}} el {{listaDocumentos[45].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[45].accion == null"></span></div>
                                 </div>
@@ -266,7 +266,7 @@
                             <label for="permisoEsp" class="control-label col-md-2">Permiso Especial: </label>
                             <div class="col-md-2">
                                 <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[37].valor" class="form-control" ng-blur="Guardar(listaDocumentos[37].idDocumento, listaDocumentos[37].valor)" />
-                                <div class="alignArrow">
+                                <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[37].accion}}" data-content="{{listaDocumentos[37].nombreUsuario}} el {{listaDocumentos[37].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[37].accion == null"></span></div>
                                 </div>
@@ -287,7 +287,7 @@
                         <div ng-show="listaDocumentos[38].permiso == 1">
                             <label for="placas" class="control-label col-md-2">Placas: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPlacas" ng-model="listaDocumentos[38].valor" class="form-control" ng-blur="Guardar(listaDocumentos[38].idDocumento, listaDocumentos[38].valor)" />
+                                <input type="text" id="txtPlacas" ng-model="listaDocumentos[14].valor" class="form-control" ng-blur="Guardar(listaDocumentos[38].idDocumento, listaDocumentos[38].valor)" ng-disabled="true"/>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[38].accion}}" data-content="{{listaDocumentos[38].nombreUsuario}} el {{listaDocumentos[38].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[38].accion == null"></span></div>
