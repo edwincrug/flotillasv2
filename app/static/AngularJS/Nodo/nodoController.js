@@ -676,7 +676,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
             angular.forEach(infogerente, function(value, key) {
                 if (value.seleccionado == true) {
                     //console.log(value, 'El elegido');
-                    documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value).then(function(result) {
+                    documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value ,$scope.empleado.idUsuario).then(function(result) {
                         //console.log(result)
 
                         var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
