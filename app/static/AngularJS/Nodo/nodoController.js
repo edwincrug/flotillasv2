@@ -478,7 +478,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
         nodoRepository.getPdf(vin).then(function(d) {
             if (d.data.mensajeresultadoField == "") {
                 var pdf = URL.createObjectURL(Utils.b64toBlob(d.data.arrFacturasField, "application/pdf"))
-                console.log(pdf)
+                //console.log(pdf)
                 $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#pdfInvoceContent');
             } else {
                 $("<h2 class='filesInvoce'>" + d.data.mensaje + "</h2>").appendTo('#pdfInvoceContent');
@@ -672,15 +672,15 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     $scope.generarCF = function(infogerente, unidad) {
             $("#elimina").remove();
             $scope.mostrarGerente = false;
-            console.log(infogerente);
+            //console.log(infogerente);
             angular.forEach(infogerente, function(value, key) {
                 if (value.seleccionado == true) {
-                    console.log(value, 'El elegido');
+                    //console.log(value, 'El elegido');
                     documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value).then(function(result) {
-                        console.log(result)
+                        //console.log(result)
 
                         var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
-                        console.log(pdf)
+                        //console.log(pdf)
                         $("<object id='elimina' class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#CartaFacturaPdf');
 
                     })
