@@ -10,8 +10,8 @@ registrationModule.factory('documentoRepository', function ($http) {
                 params: { id: '1|' + vin + '|' + idDocumento + '|' + ruta + name + '|' + consecutivo}
             });
         },
-        getCartaFactura: function(vin,unidad,persona,idempleado) {
-            return $http.get(documentoUrl + '1|' + vin + '|' + unidad.idEmpresa + '|'+ unidad.idSucursal + '|' + persona.nombre + '|' + persona.puesto + '|' + idempleado + '|' + persona.idCatPersona);
+        getCartaFactura: function(vin,unidad,persona,idempleado,iddocumento,consecutivo) {
+            return $http.get(documentoUrl + '1|' + vin + '|' + unidad.idEmpresa + '|'+ unidad.idSucursal + '|' + persona.nombre + '|' + persona.puesto + '|' + idempleado + '|' + persona.idCatPersona + '|' + iddocumento + '|'+ consecutivo);
         }
     };
 });

@@ -1,4 +1,4 @@
-registrationModule.controller("nodoController", function($scope, $rootScope, $routeParams, $window, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils, loginRepository) {
+registrationModule.controller("nodoController", function($scope, $rootScope, $routeParams, $window, $location, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils, loginRepository) {
 
     //Propiedades
     $scope.idProceso = 1;
@@ -36,8 +36,9 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     //Grupo de funciones de inicio
     $scope.init = function() {
         //Obtengo los datos del empleado logueado
+        console.log($location.path(),'Soy la ruta')
         $scope.empleado = localStorageService.get('employeeLogged');
-        if ($scope.empleado == null || $scope.empleado == undefined) {
+        if ($location.path() != '/unidad') {
             loginRepository.loginUrl($routeParams.usuario).then(function(result) {
                 $scope.empleado = result.data
                 localStorageService.set('employeeLogged', $scope.empleado);
@@ -54,7 +55,9 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
                         .success(obtieneHeaderSuccessCallback)
                         .error(errorCallBack);
                     getListaDocumentos();
+                    $location.path('/unidad');
                     $window.location.reload();
+                   // $window.location.reload();
                 });
                 //localStorageService.set('currentVIN', $routeParams.vin);
                 //$scope.unidad = localStorageService.get('currentVIN');
@@ -478,7 +481,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
         nodoRepository.getPdf(vin).then(function(d) {
             if (d.data.mensajeresultadoField == "") {
                 var pdf = URL.createObjectURL(Utils.b64toBlob(d.data.arrFacturasField, "application/pdf"))
-                //console.log(pdf)
+                    //console.log(pdf)
                 $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#pdfInvoceContent');
             } else {
                 $("<h2 class='filesInvoce'>" + d.data.mensaje + "</h2>").appendTo('#pdfInvoceContent');
@@ -669,22 +672,32 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
         $scope.mostrarGerente = true;
         //reload();
     }
-    $scope.generarCF = function(infogerente, unidad) {
+    $scope.generarCF = function(infogerente, unidad, documento) {
             $("#elimina").remove();
+            var date = new Date();
+            var consecutivo = [];
             $scope.mostrarGerente = false;
             //console.log(infogerente);
             angular.forEach(infogerente, function(value, key) {
                 if (value.seleccionado == true) {
                     //console.log(value, 'El elegido');
-                    documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value ,$scope.empleado.idUsuario).then(function(result) {
-                        //console.log(result)
+                    unidadRepository.getListaDocumentos(localStorageService.get('currentVIN').vin, documento.idDocumento).then(function(listadocumentos) {
+                        if (listadocumentos.data.length == 0) {
+                            consecutivo = 1;
+                        } else {
+                            consecutivo = listadocumentos.data.length+1;
+                        }
+                        unidadRepository.updateDocumento(localStorageService.get('currentVIN').vin, documento.idDocumento, 'Carta Factura ' + consecutivo + '.pdf', $scope.empleado.idUsuario).then(function(result) {
+                            console.log(result)
+                            documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value, $scope.empleado.idUsuario, documento.idDocumento, result.data).then(function(result) {
+                                //console.log(result)
+                                var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
+                                    //console.log(pdf)
+                                $("<object id='elimina' class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#CartaFacturaPdf');
 
-                        var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
-                        //console.log(pdf)
-                        $("<object id='elimina' class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#CartaFacturaPdf');
-
-                    })
-
+                            });
+                        });
+                    });
                 }
             });
         }

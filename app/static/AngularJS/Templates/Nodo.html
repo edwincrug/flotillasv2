@@ -224,44 +224,30 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="form-group">
-                        <div ng-show="listaDocumentos[36].permiso == 1">
-                            <label for="poliza" class="control-label col-md-2">Póliza de Seguros: </label>
+                        <div ng-show="listaDocumentos[51].permiso == 1">
+                            <label for="permisoEsp" class="control-label col-md-2">Carta Factura: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPolizaSeg" ng-model="listaDocumentos[36].valor" class="form-control" ng-blur="Guardar(listaDocumentos[36].idDocumento, listaDocumentos[36].valor)" />
+                                <input type="text" id="txtPermisoEsp" class="form-control"  ng-disabled="true" />
                                 <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
-                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[36].accion}}" data-content="{{listaDocumentos[36].nombreUsuario}} el {{listaDocumentos[36].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[36].accion == null"></span></div>
+                                    <!-- <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[100].accion}}" data-content="{{listaDocumentos[100].nombreUsuario}} el {{listaDocumentos[100].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[100].accion == null"></span></div> -->
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-default" ng-click="Cargar(listaDocumentos[22].idDocumento)">
+                                <!-- <button type="button" class="btn btn-default" ng-click="Cargar(listaDocumentos[100].idDocumento)">
                                     <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
-                                </button>
-                                <button id="btnDoc23" type="button" ng-class="{ 'oculto': listaDocumentos[22].valor == ''}" class="btn btn-default" data-original-title="Documentos" ng-click="showModal(listaDocumentos[22].idDocumento)" data-toggle="popover" data-template="Documentos.html" bs-popover data-html="true" ng-model="documentos">
+                                </button> -->
+                                <button id="btnDoc14" type="button" ng-class="{ 'oculto': listaDocumentos[51].valor == ''}" class="btn btn-default" ng-click="showModal(listaDocumentos[51].idDocumento)">
                                     <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
                                 </button>
                                 <div class="alignArrow">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
-                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[22].accion}}" data-content="{{listaDocumentos[22].nombreUsuario}} el {{listaDocumentos[22].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[22].accion == null"></span></div>
+                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[51].accion}}" data-content="{{listaDocumentos[51].nombreUsuario}} el {{listaDocumentos[51].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[51].accion == null"></span></div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Inicia Cambios -->
-                        <div ng-show="listaDocumentos[47].permiso == 1">
-                            <label for="fecha" class="control-label col-md-2">Fecha de Vigencia de la Póliza de Seguro: </label>
-                            <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[47].valor" ng-blur="Guardar(listaDocumentos[47].idDocumento, listaDocumentos[47].valor)">
-                                <div class="loader">
-                                    <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
-                                    <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[47].accion}}" data-content="{{listaDocumentos[47].nombreUsuario}} el {{listaDocumentos[47].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[47].accion == null"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Termina Cambios -->
-                    </div>
-                    <div class="form-group">
+                        </div> 
                         <div ng-show="listaDocumentos[37].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Permiso Especial: </label>
                             <div class="col-md-2">
@@ -281,6 +267,30 @@
                                 <div class="alignArrow">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[23].accion}}" data-content="{{listaDocumentos[23].nombreUsuario}} el {{listaDocumentos[23].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[23].accion == null"></span></div>
+                                </div>
+                            </div>
+                        </div>                                               
+                    </div>                   
+                    <div class="form-group">
+                        <div ng-show="listaDocumentos[52].permiso == 1">
+                            <label for="permisoEsp" class="control-label col-md-2">Carta Factura Firmada: </label>
+                            <div class="col-md-2">
+                                <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[53].valor" class="form-control" ng-blur="Guardar(listaDocumentos[53].idDocumento, listaDocumentos[53].valor)"/>
+                                <div class="loader">
+                                    <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
+                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[53].accion}}" data-content="{{listaDocumentos[53].nombreUsuario}} el {{listaDocumentos[53].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[53].accion == null"></span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default" ng-click="Cargar(listaDocumentos[52].idDocumento)">
+                                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                                </button>
+                                <button id="btnDoc14" type="button" ng-class="{ 'oculto': listaDocumentos[52].valor == ''}" class="btn btn-default" ng-click="showModal(listaDocumentos[52].idDocumento)">
+                                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                </button>
+                                <div class="alignArrow">
+                                    <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
+                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[52].accion}}" data-content="{{listaDocumentos[52].nombreUsuario}} el {{listaDocumentos[52].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[52].accion == null"></span></div>
                                 </div>
                             </div>
                         </div>
@@ -352,6 +362,42 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div ng-show="listaDocumentos[36].permiso == 1">
+                            <label for="poliza" class="control-label col-md-2">Póliza de Seguros: </label>
+                            <div class="col-md-2">
+                                <input type="text" id="txtPolizaSeg" ng-model="listaDocumentos[36].valor" class="form-control" ng-blur="Guardar(listaDocumentos[36].idDocumento, listaDocumentos[36].valor)" />
+                                <div class="loader">
+                                    <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
+                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[36].accion}}" data-content="{{listaDocumentos[36].nombreUsuario}} el {{listaDocumentos[36].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[36].accion == null"></span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-default" ng-click="Cargar(listaDocumentos[22].idDocumento)">
+                                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                                </button>
+                                <button id="btnDoc23" type="button" ng-class="{ 'oculto': listaDocumentos[22].valor == ''}" class="btn btn-default" data-original-title="Documentos" ng-click="showModal(listaDocumentos[22].idDocumento)" data-toggle="popover" data-template="Documentos.html" bs-popover data-html="true" ng-model="documentos">
+                                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                </button>
+                                <div class="alignArrow">
+                                    <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
+                                    <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[22].accion}}" data-content="{{listaDocumentos[22].nombreUsuario}} el {{listaDocumentos[22].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[22].accion == null"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Inicia Cambios -->
+                        <div ng-show="listaDocumentos[47].permiso == 1">
+                            <label for="fecha" class="control-label col-md-2">Fecha de Vigencia de la Póliza de Seguro: </label>
+                            <div class="col-md-2">
+                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[47].valor" ng-blur="Guardar(listaDocumentos[47].idDocumento, listaDocumentos[47].valor)">
+                                <div class="loader">
+                                    <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
+                                    <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[47].accion}}" data-content="{{listaDocumentos[47].nombreUsuario}} el {{listaDocumentos[47].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[47].accion == null"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Termina Cambios -->
                     </div>
                     <div class="form-group">
                         <div ng-show="listaDocumentos[41].permiso == 1">
@@ -793,7 +839,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="gerenteAct()">Cerrar</button>
-                        <button type="button" class="btn btn-primary" ng-click="generarCF(gerente,unidadHeader)" ng-disabled="!gerenteSel" ng-show="mostrarGerente">Generar Carta Factura</button>
+                        <button type="button" class="btn btn-primary" ng-click="generarCF(gerente,unidadHeader,listaDocumentos[51])" ng-disabled="!gerenteSel" ng-show="mostrarGerente">Generar Carta Factura</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
