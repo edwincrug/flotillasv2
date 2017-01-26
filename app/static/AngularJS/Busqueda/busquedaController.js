@@ -10,7 +10,7 @@
     $scope.init = function() {
         reporteRepository.getCliente().then(function(result) {
             $scope.clientes = result.data;
-            console.log($scope.clientes)
+            //console.log($scope.clientes)
         });
         //Obtengo los datos del empleado logueado
         $rootScope.empleado = localStorageService.get('employeeLogged');
@@ -83,7 +83,7 @@
         localStorageService.set('vin', $scope.vin);
         localStorageService.set('busqueda', data);
         localStorageService.set('licitacion', $scope.licitacion)
-        console.log(data, 'resultado de la flotilla')
+        //console.log(data, 'resultado de la flotilla')
         if (data.length > 0) {
             alertFactory.success('Datos de flotillas cargados.');
         } else {

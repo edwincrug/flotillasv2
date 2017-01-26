@@ -27,7 +27,7 @@ registrationModule.controller("reporteDocumentoController", function($scope, $ro
                 reporteRepository.getReporteTotal(idLicitacion).then(
                     function successgetReporteTotal(result) {
                         $scope.documentos = result.data;
-                        console.log($scope.documentos)
+                        //console.log($scope.documentos)
                         if ($scope.documentos.length > 0) {
                             angular.forEach($scope.documentos, function(value, key) {
                                 generaGrafica(value);

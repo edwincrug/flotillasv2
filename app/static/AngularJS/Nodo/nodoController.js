@@ -49,11 +49,11 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
         $scope.mes = $scope.fecha[1];
         $scope.anio = $scope.fecha[0];
         $scope.fechaNueva = $scope.dia + '/' + $scope.mes + '/' + $scope.anio
-        console.log('nueva fecha ', $scope.fechaNueva)
+        //console.log('nueva fecha ', $scope.fechaNueva)
             //.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
-        console.log($scope.fecha);
+        //console.log($scope.fecha);
         //Obtengo los datos del empleado logueado
-        console.log($location.path(), 'Soy la ruta')
+        //console.log($location.path(), 'Soy la ruta')
         $scope.empleado = localStorageService.get('employeeLogged');
         if ($location.path() != '/unidad') {
             loginRepository.loginUrl($routeParams.usuario).then(function(result) {
@@ -141,7 +141,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
 
     var obtieneRolPermisoSuccesCallback = function(data, status, headers, config) {
         $scope.listaDocumentos = data;
-        console.log($scope.listaDocumentos, 'antes de modificar')
+        //console.log($scope.listaDocumentos, 'antes de modificar')
         $scope.fechaModificada = 24;
         if (localStorageService.get('currentDocId') != null) {
             $('#btnDoc' + localStorageService.get('currentDocId')).show();
@@ -208,7 +208,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
             $scope.listaDocumentos[fecha].valor = $scope.fechaNueva;
         } else {
             $scope.listaDocumentos[fecha].valor = $scope.fechaEntrega;
-            console.log($scope.fechaNueva, 'Es la que inserta cuando la fecha viene vacia ')
+            //console.log($scope.fechaNueva, 'Es la que inserta cuando la fecha viene vacia ')
         }
         // $scope.fechaEntrega = $scope.listaDocumentos[24].valor;
         // var dia = $scope.fechaEntrega.substring(0, 2);
@@ -710,7 +710,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
                         minuto = date2.getMinutes();
                         hora = date2.getHours();
                         unidadRepository.updateDocumento(localStorageService.get('currentVIN').vin, documento.idDocumento, 'Carta Factura ' + $scope.dia + '_' + $scope.mes + '_' + $scope.anio + '_' + hora + '_' + minuto + '.pdf', $scope.empleado.idUsuario).then(function(result) {
-                            console.log(result)
+                            //console.log(result)
                             documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value, $scope.empleado.idUsuario, documento.idDocumento, result.data).then(function(result) {
                                 //console.log(result)
                                 var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
