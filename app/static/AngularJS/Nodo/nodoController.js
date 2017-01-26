@@ -1,4 +1,4 @@
-registrationModule.controller("nodoController", function($scope, $rootScope, $routeParams, $window, $location, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils, loginRepository) {
+registrationModule.controller("nodoController", function($scope, $rootScope, $filter, $routeParams, $window, $location, localStorageService, alertFactory, nodoRepository, unidadRepository, documentoRepository, busquedaRepository, Utils, loginRepository) {
 
     //Propiedades
     $scope.idProceso = 1;
@@ -27,6 +27,13 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     $scope.gerente = '';
     $scope.gerenteSel = false;
     $scope.mostrarGerente = true;
+    $scope.date = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
+    $scope.fecha = '';
+    $scope.dia = '';
+    $scope.mes = '';
+    $scope.anio = '';
+    $scope.fechaNueva = '';
+
     //Mensajes en caso de error
     var errorCallBack = function(data, status, headers, config) {
         $('#btnEnviar').button('reset');
@@ -35,8 +42,18 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
 
     //Grupo de funciones de inicio
     $scope.init = function() {
+        $scope.calendario();
+        //Fecha de eld ia hoy para fechas y para guardar la foto 
+        $scope.fecha = $scope.date.split('/');
+        $scope.dia = $scope.fecha[2];
+        $scope.mes = $scope.fecha[1];
+        $scope.anio = $scope.fecha[0];
+        $scope.fechaNueva = $scope.dia + '/' + $scope.mes + '/' + $scope.anio
+        console.log('nueva fecha ', $scope.fechaNueva)
+            //.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
+        console.log($scope.fecha);
         //Obtengo los datos del empleado logueado
-        console.log($location.path(),'Soy la ruta')
+        console.log($location.path(), 'Soy la ruta')
         $scope.empleado = localStorageService.get('employeeLogged');
         if ($location.path() != '/unidad') {
             loginRepository.loginUrl($routeParams.usuario).then(function(result) {
@@ -47,7 +64,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
                 $scope.idRol = $scope.empleado.idRol;
                 localStorageService.set('idUsuario', $scope.idUsuario);
                 localStorageService.set('idRol', $scope.idRol);
-                busquedaRepository.getFlotilla('', $routeParams.vin).then(function(result) {
+                busquedaRepository.getFlotilla('', $routeParams.vin, '').then(function(result) {
                     $scope.datoVinUrl = result.data[0];
                     localStorageService.set('currentVIN', $scope.datoVinUrl);
                     $scope.unidad = localStorageService.get('currentVIN');
@@ -57,7 +74,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
                     getListaDocumentos();
                     $location.path('/unidad');
                     $window.location.reload();
-                   // $window.location.reload();
+                    // $window.location.reload();
                 });
                 //localStorageService.set('currentVIN', $routeParams.vin);
                 //$scope.unidad = localStorageService.get('currentVIN');
@@ -87,6 +104,19 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
 
     };
 
+    //Funcion para iniciar el datepicker
+    $scope.calendario = function() {
+        $('.input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: true,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+    }
+
     /////////////////////
     ///Header
     ////////////////////
@@ -111,6 +141,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
 
     var obtieneRolPermisoSuccesCallback = function(data, status, headers, config) {
         $scope.listaDocumentos = data;
+        console.log($scope.listaDocumentos, 'antes de modificar')
         $scope.fechaModificada = 24;
         if (localStorageService.get('currentDocId') != null) {
             $('#btnDoc' + localStorageService.get('currentDocId')).show();
@@ -163,18 +194,21 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     //*******************************************************************
     var modificarFechas = function(fecha) {
         $scope.fechaEntrega = $scope.listaDocumentos[fecha].valor;
-        var dia = $scope.fechaEntrega.substring(0, 2);
-        var mes = $scope.fechaEntrega.substring(3, 5);
-        var anio = $scope.fechaEntrega.substring(6, $scope.fechaEntrega.length);
-        var date = new Date(Date.UTC(anio, mes, dia));
+        // var dia = $scope.fechaEntrega.substring(0, 2);
+        // var mes = $scope.fechaEntrega.substring(3, 5);
+        // var anio = $scope.fechaEntrega.substring(6, $scope.fechaEntrega.length);
+        // var date = new Date(Date.UTC(anio, mes, dia));
 
-        if (date == 'Invalid Date') {
+        if ($scope.fechaEntrega == 'Invalid Date') {
             $scope.fechaEntregaUni = {
                 value: new Date($scope.listaDocumentos[fecha].valor)
             };
             $scope.listaDocumentos[fecha].valor = $scope.fechaEntregaUni.value;
+        } else if ($scope.fechaEntrega == '') {
+            $scope.listaDocumentos[fecha].valor = $scope.fechaNueva;
         } else {
-            $scope.listaDocumentos[fecha].valor = date;
+            $scope.listaDocumentos[fecha].valor = $scope.fechaEntrega;
+            console.log($scope.fechaNueva, 'Es la que inserta cuando la fecha viene vacia ')
         }
         // $scope.fechaEntrega = $scope.listaDocumentos[24].valor;
         // var dia = $scope.fechaEntrega.substring(0, 2);
@@ -581,7 +615,7 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
 
     //actualiza los datos del localStorage de la unidad
     var actualizaPropiedadUnidad = function() {
-        busquedaRepository.getFlotilla(localStorageService.get('currentVIN').factura, localStorageService.get('currentVIN').vin)
+        busquedaRepository.getFlotilla('', localStorageService.get('currentVIN').vin, localStorageService.get('currentVIN').idLicitacion)
             .success(getFlotillaSuccessCallback)
             .error(errorCallBack);
     }
@@ -635,59 +669,47 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $ro
     }
 
     //**************************************************************************
-    //****************Para obtener la CARTA FACTURA***************************//
+    //**Obtiene el Gerente para CARTA FACTURA
     $scope.cartaFactura = function(unidad) {
-        busquedaRepository.getGerente(0).then(function(result) {
-            $scope.gerente = result.data;
-            $('#cartaFactura').modal('show');
-            // var iframe = '<div class="modal-body"><div ng-repeat="gerentes in gerente"><div class="row"><div class="col-md-2"><input type="checkbox"></div><div class="col-md-10">{{gerentes.nombre}}</div></div></div><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
-            // $.createModal({
-            //     title: 'CARTA FACTURA',
-            //     message: iframe,
-            //     closeButton: false,
-            //     scrollable: false
-            // });
-        });
-        //var iframe = '<div class="modal-body"><div id="pdfInvoceContent"><div ng-show="loadingOrder" class="sk-spinner sk-spinner-double-bounce"><div class="sk-double-bounce1"></div><div class="sk-double-bounce2"></div></div></div></div>';
-        // $.createModal({
-        //     title: 'CARTA FACTURA',
-        //     message: iframe,
-        //     closeButton: false,
-        //     scrollable: false
-        // });
-        // documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad).then(function(result) {
-        //     console.log(result)
-
-        //     var pdf = URL.createObjectURL(Utils.b64toBlob(result.data, "application/pdf"))
-        //     console.log(pdf)
-        //     $("<object class='filesInvoce' data='" + pdf + "' width='100%' height='500px' >").appendTo('#pdfInvoceContent');
-
-        // })
-    }
+            busquedaRepository.getGerente(0).then(function(result) {
+                $scope.gerente = result.data;
+                $('#cartaFactura').modal('show');
+            });
+        }
+        //**************************************************************************
+        //** Para inhabilitar los gerentes una vez seleccionado
     $scope.gerenteSeleccionado = function(info) {
-        $scope.gerenteSel = true;
-    }
+            $scope.gerenteSel = true;
+        }
+        //**************************************************************************
+        //**Para Activar los gerentes despues de cerrar la pantalla
     $scope.gerenteAct = function() {
-        $scope.gerenteSel = false;
-        $scope.mostrarGerente = true;
-        //reload();
-    }
+            $scope.gerenteSel = false;
+            $scope.mostrarGerente = true;
+            //reload();
+        }
+        //**************************************************************************
+        //**Para obtener la CARTA FACTURA y generarla
     $scope.generarCF = function(infogerente, unidad, documento) {
             $("#elimina").remove();
-            var date = new Date();
-            var consecutivo = [];
+            //var consecutivo = [];
             $scope.mostrarGerente = false;
             //console.log(infogerente);
             angular.forEach(infogerente, function(value, key) {
                 if (value.seleccionado == true) {
                     //console.log(value, 'El elegido');
                     unidadRepository.getListaDocumentos(localStorageService.get('currentVIN').vin, documento.idDocumento).then(function(listadocumentos) {
-                        if (listadocumentos.data.length == 0) {
-                            consecutivo = 1;
-                        } else {
-                            consecutivo = listadocumentos.data.length+1;
-                        }
-                        unidadRepository.updateDocumento(localStorageService.get('currentVIN').vin, documento.idDocumento, 'Carta Factura ' + consecutivo + '.pdf', $scope.empleado.idUsuario).then(function(result) {
+                        // if (listadocumentos.data.length == 0) {
+                        //     consecutivo = 1;
+                        // } else {
+                        //     consecutivo = listadocumentos.data.length + 1;
+                        // }
+                        var date2 = new Date();
+                        var hora = '';
+                        var minuto = '';
+                        minuto = date2.getMinutes();
+                        hora = date2.getHours();
+                        unidadRepository.updateDocumento(localStorageService.get('currentVIN').vin, documento.idDocumento, 'Carta Factura ' + $scope.dia + '_' + $scope.mes + '_' + $scope.anio + '_' + hora + '_' + minuto + '.pdf', $scope.empleado.idUsuario).then(function(result) {
                             console.log(result)
                             documentoRepository.getCartaFactura(localStorageService.get('currentVIN').vin, unidad, value, $scope.empleado.idUsuario, documento.idDocumento, result.data).then(function(result) {
                                 //console.log(result)

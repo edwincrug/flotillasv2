@@ -29,6 +29,13 @@ registrationModule.factory('reporteRepository', function ($http) {
                 method: "GET",
                 params: { id: '4|' }
             });
+        },
+        getReporteTotal: function (idLicitacion) {
+            return $http({
+                url: reporteUrl,
+                method: "GET",
+                params: { id: '5|' + idLicitacion }
+            });
         }
         
     };

@@ -224,12 +224,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                         <div ng-show="listaDocumentos[51].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Carta Factura: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPermisoEsp" class="form-control"  ng-disabled="true" />
+                                <input type="text" id="txtPermisoEsp" class="form-control" ng-disabled="true" />
                                 <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <!-- <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[100].accion}}" data-content="{{listaDocumentos[100].nombreUsuario}} el {{listaDocumentos[100].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[100].accion == null"></span></div> -->
@@ -247,7 +247,7 @@
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[51].accion}}" data-content="{{listaDocumentos[51].nombreUsuario}} el {{listaDocumentos[51].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[51].accion == null"></span></div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div ng-show="listaDocumentos[37].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Permiso Especial: </label>
                             <div class="col-md-2">
@@ -269,13 +269,13 @@
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[23].accion}}" data-content="{{listaDocumentos[23].nombreUsuario}} el {{listaDocumentos[23].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[23].accion == null"></span></div>
                                 </div>
                             </div>
-                        </div>                                               
-                    </div>                   
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div ng-show="listaDocumentos[52].permiso == 1">
                             <label for="permisoEsp" class="control-label col-md-2">Carta Factura Firmada: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[53].valor" class="form-control" ng-blur="Guardar(listaDocumentos[53].idDocumento, listaDocumentos[53].valor)"/>
+                                <input type="text" id="txtPermisoEsp" ng-model="listaDocumentos[53].valor" class="form-control" ng-blur="Guardar(listaDocumentos[53].idDocumento, listaDocumentos[53].valor)" ng-disabled="true" />
                                 <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[53].accion}}" data-content="{{listaDocumentos[53].nombreUsuario}} el {{listaDocumentos[53].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[53].accion == null"></span></div>
@@ -297,7 +297,7 @@
                         <div ng-show="listaDocumentos[38].permiso == 1">
                             <label for="placas" class="control-label col-md-2">Placas: </label>
                             <div class="col-md-2">
-                                <input type="text" id="txtPlacas" ng-model="listaDocumentos[14].valor" class="form-control" ng-blur="Guardar(listaDocumentos[38].idDocumento, listaDocumentos[38].valor)" ng-disabled="true"/>
+                                <input type="text" id="txtPlacas" ng-model="listaDocumentos[14].valor" class="form-control" ng-blur="Guardar(listaDocumentos[38].idDocumento, listaDocumentos[38].valor)" ng-disabled="true" />
                                 <div class="loader">
                                     <div class="showCtrl" id="loader1"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready1"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[38].accion}}" data-content="{{listaDocumentos[38].nombreUsuario}} el {{listaDocumentos[38].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[38].accion == null"></span></div>
@@ -390,7 +390,11 @@
                         <div ng-show="listaDocumentos[47].permiso == 1">
                             <label for="fecha" class="control-label col-md-2">Fecha de Vigencia de la Póliza de Seguro: </label>
                             <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[47].valor" ng-blur="Guardar(listaDocumentos[47].idDocumento, listaDocumentos[47].valor)">
+                                <!-- <input id="txtFechaPol" type="date" class="form-control" ng-model="listaDocumentos[47].valor" ng-blur="Guardar(listaDocumentos[47].idDocumento, listaDocumentos[47].valor)"> -->
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="listaDocumentos[47].valor" value={{fechaNueva}} placeholder="dd/mm/yyyy" ng-change="Guardar(listaDocumentos[47].idDocumento, listaDocumentos[47].valor)">
+                                </div>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[47].accion}}" data-content="{{listaDocumentos[47].nombreUsuario}} el {{listaDocumentos[47].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[47].accion == null"></span></div>
@@ -426,7 +430,11 @@
                         <div ng-show="listaDocumentos[48].permiso == 1">
                             <label for="fecha" class="control-label col-md-2">Fecha de Vigencia del Pago de Verificación: </label>
                             <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[48].valor" ng-blur="Guardar(listaDocumentos[48].idDocumento, listaDocumentos[48].valor)">
+                                <!-- <input id="txtFechaPagoVeri" type="date" class="form-control" ng-model="listaDocumentos[48].valor" ng-blur="Guardar(listaDocumentos[48].idDocumento, listaDocumentos[48].valor)"> -->
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="listaDocumentos[48].valor" ng-change="Guardar(listaDocumentos[48].idDocumento, listaDocumentos[48].valor)" value={{fechaNueva}} placeholder="dd/mm/yyyy">
+                                </div>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[48].accion}}" data-content="{{listaDocumentos[48].nombreUsuario}} el {{listaDocumentos[48].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[48].accion == null"></span></div>
@@ -462,7 +470,11 @@
                         <div ng-show="listaDocumentos[49].permiso == 1">
                             <label for="fecha" class="control-label col-md-2">Fecha de Vigencia de la Tenencia: </label>
                             <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[49].valor" ng-blur="Guardar(listaDocumentos[49].idDocumento, listaDocumentos[49].valor)">
+                                <!-- <input id="txtFechaTen" type="date" class="form-control" ng-model="listaDocumentos[49].valor" ng-blur="Guardar(listaDocumentos[49].idDocumento, listaDocumentos[49].valor)"> -->
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="listaDocumentos[49].valor" ng-change="Guardar(listaDocumentos[49].idDocumento, listaDocumentos[49].valor)"  placeholder="dd/mm/yyyy">
+                                </div>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[49].accion}}" data-content="{{listaDocumentos[49].nombreUsuario}} el {{listaDocumentos[49].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[49].accion == null"></span></div>
@@ -498,7 +510,11 @@
                         <div ng-show="listaDocumentos[50].permiso == 1">
                             <label for="fecha" class="control-label col-md-2">Fecha de Vigencia de la Verificación: </label>
                             <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[50].valor" ng-blur="Guardar(listaDocumentos[50].idDocumento, listaDocumentos[50].valor)">
+                                <!-- <input id="txtFechaVeri" type="date" class="form-control" ng-model="listaDocumentos[50].valor" ng-blur="Guardar(listaDocumentos[50].idDocumento, listaDocumentos[50].valor)"> -->
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="listaDocumentos[50].valor" ng-change="Guardar(listaDocumentos[50].idDocumento, listaDocumentos[50].valor)" value={{fechaNueva}} placeholder="dd/mm/yyyy">
+                                </div>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[50].accion}}" data-content="{{listaDocumentos[50].nombreUsuario}} el {{listaDocumentos[50].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[50].accion == null"></span></div>
@@ -517,7 +533,11 @@
                         <div ng-show="listaDocumentos[24].permiso == 1">
                             <label for="fecha" class="control-label col-md-2">Fecha de entrega: </label>
                             <div class="col-md-2">
-                                <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[24].valor" ng-blur="Guardar(listaDocumentos[24].idDocumento, listaDocumentos[24].valor)">
+                                <!-- <input id="txtFechaEnt" type="date" class="form-control" ng-model="listaDocumentos[24].valor" ng-blur="Guardar(listaDocumentos[24].idDocumento, listaDocumentos[24].valor)"  value={{startDate}}> -->
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" id="fInicio" ng-model="listaDocumentos[24].valor" ng-change="Guardar(listaDocumentos[24].idDocumento, listaDocumentos[24].valor)" value={{fechaNueva}} placeholder="dd/mm/yyyy">
+                                </div>
                                 <div class="loader">
                                     <div class="showCtrl" id="loader25"><img src="image/gif/arrows.gif" class="gifLoader"></div>
                                     <div id="ready25"><span class="glyphicon glyphicon-ok ready" data-toggle="popover" data-original-title="{{listaDocumentos[24].accion}}" data-content="{{listaDocumentos[24].nombreUsuario}} el {{listaDocumentos[24].fechaMod | date:'MM/dd/yyyy hh:mm:ss'}}" ng-hide="listaDocumentos[24].accion == null"></span></div>
@@ -824,7 +844,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title">CARTA FACTURA</h4>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <div ng-repeat="gerentes in gerente" ng-show="mostrarGerente">
                             <div class="row">
                                 <div class="col-md-2" style="text-align: center;">
