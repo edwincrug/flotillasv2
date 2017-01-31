@@ -49,11 +49,11 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
         $scope.mes = $scope.fecha[1];
         $scope.anio = $scope.fecha[0];
         $scope.fechaNueva = $scope.dia + '/' + $scope.mes + '/' + $scope.anio
-        //console.log('nueva fecha ', $scope.fechaNueva)
+            //console.log('nueva fecha ', $scope.fechaNueva)
             //.getDate() + "/" + ($scope.date.getMonth() + 1) + "/" + $scope.date.getFullYear();
-        //console.log($scope.fecha);
-        //Obtengo los datos del empleado logueado
-        //console.log($location.path(), 'Soy la ruta')
+            //console.log($scope.fecha);
+            //Obtengo los datos del empleado logueado
+            //console.log($location.path(), 'Soy la ruta')
         $scope.empleado = localStorageService.get('employeeLogged');
         if ($location.path() != '/unidad') {
             loginRepository.loginUrl($routeParams.usuario).then(function(result) {
@@ -194,11 +194,12 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
     //*******************************************************************
     var modificarFechas = function(fecha) {
         $scope.fechaEntrega = $scope.listaDocumentos[fecha].valor;
-        // var dia = $scope.fechaEntrega.substring(0, 2);
-        // var mes = $scope.fechaEntrega.substring(3, 5);
-        // var anio = $scope.fechaEntrega.substring(6, $scope.fechaEntrega.length);
-        // var date = new Date(Date.UTC(anio, mes, dia));
-
+        var dateFechaEntregaModificadda = '';
+        var fechaEntregaModificada = '';
+        var fechaEntregadia = '';
+        var fechaEntregames = '';
+        var fechaEntregaanio = '';
+        var fechaEntergaNueva = '';
         if ($scope.fechaEntrega == 'Invalid Date') {
             $scope.fechaEntregaUni = {
                 value: new Date($scope.listaDocumentos[fecha].valor)
@@ -207,8 +208,15 @@ registrationModule.controller("nodoController", function($scope, $rootScope, $fi
         } else if ($scope.fechaEntrega == '') {
             $scope.listaDocumentos[fecha].valor = $scope.fechaNueva;
         } else {
-            $scope.listaDocumentos[fecha].valor = $scope.fechaEntrega;
-            //console.log($scope.fechaNueva, 'Es la que inserta cuando la fecha viene vacia ')
+            var dateFechaEntrega = new Date($scope.fechaEntrega);            
+            if ($scope.fechaEntrega.length <= 10) { //Cuando la fecha esta guardada con el formato dd/mm/yyyy
+                $scope.listaDocumentos[fecha].valor = $scope.fechaEntrega;                
+            } else { //Cuando la fecha esta guardadda con el formato Mon Jan 30 2017 19:08:36 GMT-0600 (Hora estándar central (México))
+                dateFechaEntregaModificadda = dateFechaEntrega.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' }).split(' ').join('-'); 
+                fechaEntregaModificada = dateFechaEntregaModificadda.split('/');                
+                fechaEntergaNueva = fechaEntregaModificada[0] + '/' + fechaEntregaModificada[1] + '/' + fechaEntregaModificada[2];               
+                $scope.listaDocumentos[fecha].valor = fechaEntergaNueva;                
+            }
         }
         // $scope.fechaEntrega = $scope.listaDocumentos[24].valor;
         // var dia = $scope.fechaEntrega.substring(0, 2);
