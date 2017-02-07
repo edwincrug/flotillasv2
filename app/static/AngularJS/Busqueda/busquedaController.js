@@ -55,7 +55,7 @@
         factura = datoFactura;
         vin = datoVin;
         licitacion = datoLicitacion;
-        if (factura == '' && vin == '' ) {
+        if (factura == '' && vin == '' &&  licitacion == undefined) {
             alertFactory.warning('Seleccione al menos un criterio de búsqueda');
             //regreso el objeto a su estado original
             $('#btnBuscar').button('reset');
